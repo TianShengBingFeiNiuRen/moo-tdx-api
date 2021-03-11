@@ -12,7 +12,7 @@ from mootdx.quotes import Quotes
 
 server = flask.Flask(__name__)
 
-
+# 查询股票列表
 @server.route("/getCodeTdx", methods=["get"])
 def getCodeTdx():
     client = Quotes.factory(market='std')
