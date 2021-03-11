@@ -5,10 +5,20 @@
 
 """
 from mootdx import consts
+from mootdx.consts import MARKET_SH
 from mootdx.quotes import Quotes
 
 
-# getCodeTdx
+# 指数K线行情
+def getPriceTdx():
+    client = Quotes.factory(market='std')
+    price = client.index(frequency=9, market=MARKET_SH, symbol='000001', start=1, offset=2)
+    to_json = price.to_json(orient="records", force_ascii=False)
+    print(type(to_json))
+    print(to_json)
+
+
+# 查询股票列表
 def getCodeTdx():
     client = Quotes.factory(market='std')
     symbol = client.stocks(market=consts.MARKET_SH)
@@ -30,4 +40,4 @@ def getCodeTdx():
 
 
 if __name__ == '__main__':
-    getCodeTdx()
+    getPriceTdx()

@@ -8,9 +8,26 @@ import json
 
 import flask
 from mootdx import consts
+from mootdx.consts import MARKET_SH
 from mootdx.quotes import Quotes
 
 server = flask.Flask(__name__)
+
+
+# 指数K线行情
+@server.route("/getPriceTdx", methods=["get"])
+def getPriceTdx():
+    frequency = flask.request.values.get("frequency")
+    symbol = flask.request.values.get("symbol")
+    start = flask.request.values.get("start")
+    offset = flask.request.values.get("offset")
+    client = Quotes.factory(market='std')
+    price = client.index(frequency=frequency, market=MARKET_SH, symbol=symbol, start=start, offset=offset)
+    columns = price.columns
+    print(type(columns))
+    print(columns)
+    to_json = price.to_json(orient="records", force_ascii=False)
+    return to_json
 
 
 # 查询股票列表
