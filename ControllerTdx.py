@@ -14,7 +14,11 @@ from mootdx.quotes import Quotes
 server = flask.Flask(__name__)
 
 
-# 指数K线行情
+# 获取指数K线行情
+# frequency K线种类 0 5分钟K线 1 15分钟K线 2 30分钟K线 3 1小时K线 4 日K线 5 周K线 6 月K线 7 1分钟 8 1分钟K线 9 日K线 10 季K线 11 年K线
+# symbol    标的代码
+# start     开始位置
+# offset    用户要请求的 K 线数目，最大值为 800
 @server.route("/getPriceTdx", methods=["get"])
 def getPriceTdx():
     frequency = flask.request.values.get("frequency")
@@ -30,7 +34,7 @@ def getPriceTdx():
     return to_json
 
 
-# 查询股票列表
+# 获取标的列表
 @server.route("/getCodeTdx", methods=["get"])
 def getCodeTdx():
     client = Quotes.factory(market='std')
